@@ -20,10 +20,56 @@ public class FractalExplorer extends JFrame {
 	Canvas canvas;
 	BufferedImage fractalImage;
 	
+	static final int MAX_ITER = 200;
+	
 	public FractalExplorer() {
 		setInitialGUIProperties();
 		addCanvas();
 	}
+
+	private int computeIterations(double c_r, double c_i) {
+		
+		/*
+		
+		Let c = c_r + c_i
+		Let z = z_r + z_i
+		
+		z' = z*z + c
+		   = (z_r + z_i)(z_r + z_i) + c_r + c_i
+			 = z_r² + 2*z_r*z_i - z_i² + c_r + c_i
+			
+			 z_r' = z_r² - z_i² + c_r
+			 z_i' = 2*z_i*z_r + c_i
+		
+		*/
+
+		double z_r = 0.0;
+		double z_i = 0.0;
+		
+		int iterCount = 0;
+
+		// Modulus (distance) formula:
+		// √(a² + b²) <= 2.0
+		// a² + b² <= 4.0
+		while ( z_r*z_r + z_i*z_i <= 4.0 ) {
+			
+			double z_r_tmp = z_r;
+			
+			z_r = z_r*z_r - z_i*z_i + c_r;
+			z_i = 2*z_i*z_r_tmp + c_i;
+			
+			// Point was inside the Mandelbrot set
+			if (iterCount >= MAX_ITER) 
+				return MAX_ITER;
+			
+			iterCount++;
+			
+		}
+		
+		// Complex point was outside Mandelbrot set
+		return iterCount;
+		
+	} 
 	
 	private void addCanvas() {
 		
@@ -34,7 +80,7 @@ public class FractalExplorer extends JFrame {
 		
 	}
 	
-	public void setInitialGUIProperties() {
+	private void setInitialGUIProperties() {
 		
 		this.setTitle("Fractal Explorer");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,8 +94,7 @@ public class FractalExplorer extends JFrame {
 	public static void main(String[] args) {
 		new FractalExplorer();
 	}
-	
-	
+		
 	private class Canvas extends JPanel {
 		
 		@Override public Dimension getPreferredSize() {
