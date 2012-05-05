@@ -105,11 +105,14 @@ public class FractalExplorer extends JFrame {
 // -------------------------------------------------------------------	
 	private int makeColor( int iterCount ) {
 		
-		if (iterCount == MAX_ITER) {
-			return 0;//Color.BLACK.getRGB();
-		}
+		int color = 0b011011100001100101101000; 
+		int mask  = 0b000000000000010101110111; 
+		int shiftMag = iterCount / 13;
 		
-		return Color.BLUE.getRGB();
+		if (iterCount == MAX_ITER) 
+			return Color.BLACK.getRGB();
+		
+		return color | (mask << shiftMag);
 		
 	} // makeColor
 
