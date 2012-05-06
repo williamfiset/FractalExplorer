@@ -34,6 +34,7 @@ public class FractalExplorer extends JFrame {
 	public FractalExplorer() {
 		setInitialGUIProperties();
 		addCanvas();
+		canvas.addKeyStrokeEvents();
 		updateFractal();
 	}
 	
@@ -103,6 +104,8 @@ public class FractalExplorer extends JFrame {
 		
 	} // updateFractal
 // -------------------------------------------------------------------	
+	/** Returns a posterized color based off of the iteration count
+	    of a given point in the fractal **/
 	private int makeColor( int iterCount ) {
 		
 		int color = 0b011011100001100101101000; 
@@ -161,7 +164,30 @@ public class FractalExplorer extends JFrame {
 		return iterCount;
 		
 	} // computeIterations
-
+// -------------------------------------------------------------------
+	private void moveUp() {
+		double curHeight = HEIGHT / zoomFactor;
+		topLeftY += curHeight / 6;
+		updateFractal();
+	} // moveUp
+// -------------------------------------------------------------------
+	private void moveDown() {
+		double curHeight = HEIGHT / zoomFactor;
+		topLeftY -= curHeight / 6;
+		updateFractal();
+	} // moveDown
+// -------------------------------------------------------------------
+	private void moveLeft() {
+		double curWidth = WIDTH / zoomFactor;
+		topLeftX -= curWidth / 6;
+		updateFractal();
+	} // moveLeft
+// -------------------------------------------------------------------
+	private void moveRight() {
+		double curWidth = WIDTH / zoomFactor;
+		topLeftX += curWidth / 6;
+		updateFractal();
+	} // moveRight
 // -------------------------------------------------------------------		
 
 	private void adjustZoom( double newX, double newY, double newZoomFactor ) {
@@ -176,7 +202,7 @@ public class FractalExplorer extends JFrame {
 		
 		updateFractal();
 		
-	}
+	} // adjustZoom
 
 // -------------------------------------------------------------------	
 	
@@ -184,7 +210,7 @@ public class FractalExplorer extends JFrame {
 		
 		public Canvas() {
 			addMouseListener(this);
-		}
+		} 
 		
 		@Override public Dimension getPreferredSize() {
 			return new Dimension(WIDTH, HEIGHT);
@@ -213,7 +239,50 @@ public class FractalExplorer extends JFrame {
 				
 			}
 			
-		}
+		} // mousePressed
+		
+		public void addKeyStrokeEvents() {
+			
+			KeyStroke wKey = KeyStroke.getKeyStroke(KeyEvent.VK_W, 0 );
+			KeyStroke aKey = KeyStroke.getKeyStroke(KeyEvent.VK_A, 0 );
+			KeyStroke sKey = KeyStroke.getKeyStroke(KeyEvent.VK_S, 0 );
+			KeyStroke dKey = KeyStroke.getKeyStroke(KeyEvent.VK_D, 0 );
+			
+			Action wPressed = new AbstractAction() {
+				@Override public void actionPerformed(ActionEvent e) {
+					moveUp();
+				}
+			};
+			
+			Action aPressed = new AbstractAction() {
+				@Override public void actionPerformed(ActionEvent e) {
+					moveLeft();
+				}
+			};
+			
+			Action sPressed = new AbstractAction() {
+				@Override public void actionPerformed(ActionEvent e) {
+					moveDown();
+				}
+			};
+			
+			Action dPressed = new AbstractAction() {
+				@Override public void actionPerformed(ActionEvent e) {
+					moveRight();
+				}
+			}; 
+			
+			this.getInputMap().put( wKey, "w_key" );
+			this.getInputMap().put( aKey, "a_key" );
+			this.getInputMap().put( sKey, "s_key" );
+			this.getInputMap().put( dKey, "d_key" );
+			
+			this.getActionMap().put( "w_key", wPressed );
+			this.getActionMap().put( "a_key", aPressed );
+			this.getActionMap().put( "s_key", sPressed );
+			this.getActionMap().put( "d_key", dPressed );
+			
+		} // addKeyStrokeEvents
 		
 		@Override public void mouseReleased(MouseEvent mouse){ }
 		@Override public void mouseClicked(MouseEvent mouse) { }
