@@ -1,4 +1,4 @@
-#Fractal Explorer
+# Fractal Explorer
 
 ### Running Application
 
