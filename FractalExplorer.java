@@ -44,14 +44,14 @@ public class FractalExplorer extends JFrame {
 	
 // -------------------------------------------------------------------
 
-		private void addCanvas() {
-			
-			canvas = new Canvas();
-			fractalImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-			canvas.setVisible(true);
-			this.add(canvas, BorderLayout.CENTER);
-			
-		} // addCanvas
+	private void addCanvas() {
+
+		canvas = new Canvas();
+		fractalImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		canvas.setVisible(true);
+		this.add(canvas, BorderLayout.CENTER);
+
+	} // addCanvas
 
 // -------------------------------------------------------------------
 		
@@ -64,7 +64,7 @@ public class FractalExplorer extends JFrame {
 			this.setLocationRelativeTo(null);
 			
 		} // setInitialGUIProperties
-		
+
 // -------------------------------------------------------------------
 	private double getXPos(double x) {
 		return x/zoomFactor + topLeftX;
@@ -126,12 +126,12 @@ public class FractalExplorer extends JFrame {
 		Let z = z_r + z_i
 		
 		z' = z*z + c
-		   = (z_r + z_i)(z_r + z_i) + c_r + c_i
-			 = z_r² + 2*z_r*z_i - z_i² + c_r + c_i
-			
-			 z_r' = z_r² - z_i² + c_r
-			 z_i' = 2*z_i*z_r + c_i
-		
+		   = (z_r + z_i)(z_r + z_i) + (c_r + c_i)
+		   = z_r² + 2*z_r*z_i - z_i² + c_r + c_i
+
+		     z_r' = z_r² - z_i² + c_r
+		     z_i' = 2*z_i*z_r + c_i
+		     
 		*/
 
 		double z_r = 0.0;
