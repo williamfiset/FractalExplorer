@@ -1,10 +1,7 @@
-
 /**
-
-A Fractal Explorer created in Java
-@author William Fiset
-
-**/
+ * A Fractal Explorer created in Java
+ * @author William Fiset, william.alexandre.fiset@gmail.com
+ **/
 
 import java.util.*;
 import java.awt.*;
@@ -36,6 +33,7 @@ public class FractalExplorer extends JFrame {
 		addCanvas();
 		canvas.addKeyStrokeEvents();
 		updateFractal();
+		this.setVisible(true);
 	}
 	
 // -------------------------------------------------------------------
@@ -64,7 +62,6 @@ public class FractalExplorer extends JFrame {
 			this.setSize(WIDTH, HEIGHT);
 			this.setResizable(false);
 			this.setLocationRelativeTo(null);
-			this.setVisible(true);
 			
 		} // setInitialGUIProperties
 		
